@@ -108,5 +108,10 @@ public class CollectionUtilsTest {
 
         stringSubList = CollectionUtils.range(stringList, "", "ccccc", Comparator.comparing(String::length));
         Assertions.assertTrue(stringSubList.containsAll(stringList) && stringSubList.size() == stringList.size());
+
+
+        List<Number> numberList = new LinkedList<>(List.of(1, 2.0, 3, 4.5));
+        List<Number> numberSubList = CollectionUtils.range(numberList, 2.0, 6.0, Comparator.comparing(Number::doubleValue));
+        Assertions.assertTrue(numberSubList.containsAll(List.of(2.0, 3, 4.5)) && numberSubList.size() == 3);
     }
 }
