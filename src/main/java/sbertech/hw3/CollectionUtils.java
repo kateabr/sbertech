@@ -48,7 +48,7 @@ public class CollectionUtils<T> {
         return list.stream().filter(e->e.compareTo(min) >= 0 && e.compareTo(max) <= 0).collect(Collectors.toList());
     }
 
-    public static <T> List<T> range(List<T> list, T min, T max, Comparator<T> comparator) {
+    public static <T> List<T> range(List<? extends T> list, T min, T max, Comparator<T> comparator) {
         return list.stream().filter(e->comparator.compare(e, min) >= 0 && comparator.compare(e, max) <= 0).collect(Collectors.toList());
     }
 }
