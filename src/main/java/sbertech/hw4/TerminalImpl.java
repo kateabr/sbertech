@@ -33,14 +33,37 @@ public class TerminalImpl implements TerminalInterface {
     }
 
     public static void main(String[] args) {
-        Scanner pinScanner = new Scanner(System.in);
-        TerminalImpl terminal = new TerminalImpl(pinScanner.nextLine(), new BigDecimal(1000));
-        while (true)
-//        try {
-            terminal.withdraw(pinScanner.nextLine(), BigDecimal.valueOf(2000));
-//        } catch (TerminalRelatedException exception) {
-//            System.out.println(exception.getMessage());
-//        }
+        System.out.print("Set the pin code: ");
+        Scanner inputScanner = new Scanner(System.in);
+        TerminalImpl terminal = new TerminalImpl(inputScanner.nextLine(), new BigDecimal(1000));
+        while (true) {
+            System.out.print("Select an action (1 = display balance; 2 = withdraw funds; 3 = deposit funds): ");
+            switch (Integer.parseInt(inputScanner.nextLine())) {
+                case 1 -> {
+                    System.out.print("Enter pin code to display account balance: ");
+                    System.out.printf("Current balance: %f%n", terminal.getBalance(inputScanner.nextLine()));
+                }
+                case 2 -> {
+                    System.out.print("Sum to withdraw: ");
+                    BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
+                    if (sum.compareTo(BigDecimal.ZERO) != 0) {
+                        System.out.print("Enter pin code: ");
+                        terminal.withdraw(inputScanner.nextLine(), sum);
+                        System.out.println("Transaction successfully completed!");
+                    }
+                }
+                case 3 -> {
+                    System.out.print("Sum to deposit: ");
+                    BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
+                    if (sum.compareTo(BigDecimal.ZERO) != 0) {
+                        System.out.print("Enter pin code: ");
+                        terminal.deposit(inputScanner.nextLine(), sum);
+                        System.out.println("Transaction successfully completed!");
+                    }
+                }
+                default -> System.out.println("Invalid action code");
+            }
+        }
 
     }
 }
