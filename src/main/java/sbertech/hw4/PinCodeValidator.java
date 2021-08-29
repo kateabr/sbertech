@@ -1,7 +1,6 @@
 package sbertech.hw4;
 
 import sbertech.hw4.Exceptions.*;
-import sbertech.hw4.terminal.Exceptions.*;
 
 import java.util.Arrays;
 import java.util.Objects;

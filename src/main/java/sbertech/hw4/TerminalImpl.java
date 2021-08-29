@@ -34,10 +34,10 @@ public class TerminalImpl implements TerminalInterface {
 
     public static void main(String[] args) {
         Scanner pinScanner = new Scanner(System.in);
-        TerminalImpl terminal = new TerminalImpl(pinScanner.nextLine(), new BigDecimal(10000));
+        TerminalImpl terminal = new TerminalImpl(pinScanner.nextLine(), new BigDecimal(1000));
         while (true)
 //        try {
-            terminal.deposit(pinScanner.nextLine(), BigDecimal.valueOf(10));
+            terminal.withdraw(pinScanner.nextLine(), BigDecimal.valueOf(2000));
 //        } catch (TerminalRelatedException exception) {
 //            System.out.println(exception.getMessage());
 //        }

@@ -1,6 +1,7 @@
 package sbertech.hw4;
 
 import sbertech.hw4.Exceptions.NegativeSumException;
+import sbertech.hw4.Exceptions.InsufficientFundsException;
 import sbertech.hw4.Exceptions.SumNotDivisibleBy100Exception;
 
 import java.math.BigDecimal;
@@ -19,8 +20,8 @@ public class TerminalServer {
     }
 
     private void verifySum(BigDecimal sum) {
-        if (sum.doubleValue() % 100 != 0) throw new SumNotDivisibleBy100Exception(String.format("sum not divisible by 100 (%f)", sum.doubleValue()));
-        if (sum.doubleValue() < 0) throw new NegativeSumException(String.format("sum is negative (%f)", sum.doubleValue()));
+        if (sum.doubleValue() % 100 != 0) throw new SumNotDivisibleBy100Exception(sum.toString());
+        if (sum.doubleValue() < 0) throw new NegativeSumException(sum.toString());
     }
 
     public void deposit(BigDecimal sum) {
@@ -30,6 +31,7 @@ public class TerminalServer {
 
     public void withdraw(BigDecimal sum) {
         verifySum(sum);
+        if (sum.compareTo(currentSum) > 0) throw new InsufficientFundsException(sum.toString());
         currentSum = currentSum.subtract(sum);
     }
 }

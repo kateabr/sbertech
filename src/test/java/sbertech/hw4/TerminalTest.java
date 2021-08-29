@@ -22,6 +22,7 @@ public class TerminalTest {
         TerminalImpl terminal = new TerminalImpl("1234", BigDecimal.valueOf(10000));
         Assertions.assertThrows(SumNotDivisibleBy100Exception.class, () -> terminal.deposit("1234", BigDecimal.valueOf(10)));
         Assertions.assertThrows(NegativeSumException.class, () -> terminal.withdraw("1234", BigDecimal.valueOf(-1000)));
+        Assertions.assertThrows(InsufficientFundsException.class, () -> terminal.withdraw("1234", BigDecimal.valueOf(11000)));
         terminal.deposit("1234", BigDecimal.valueOf(1000));
         Assertions.assertEquals(terminal.getBalance("1234"), BigDecimal.valueOf(11000));
         terminal.withdraw("1234", BigDecimal.valueOf(5000));
