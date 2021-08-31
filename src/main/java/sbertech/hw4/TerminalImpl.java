@@ -1,6 +1,8 @@
 package sbertech.hw4;
 
 import sbertech.hw4.Exceptions.AuthorizationDeniedException;
+import sbertech.hw4.Exceptions.InvalidPinCodeException;
+import sbertech.hw4.Exceptions.TerminalRelatedException;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -33,35 +35,48 @@ public class TerminalImpl implements TerminalInterface {
     }
 
     public static void main(String[] args) {
-        System.out.print("Set the pin code: ");
         Scanner inputScanner = new Scanner(System.in);
-        TerminalImpl terminal = new TerminalImpl(inputScanner.nextLine(), new BigDecimal(1000));
-        while (true) {
-            System.out.print("Select an action (1 = display balance; 2 = withdraw funds; 3 = deposit funds): ");
-            switch (Integer.parseInt(inputScanner.nextLine())) {
-                case 1 -> {
-                    System.out.print("Enter pin code to display account balance: ");
-                    System.out.printf("Current balance: %f%n", terminal.getBalance(inputScanner.nextLine()));
-                }
-                case 2 -> {
-                    System.out.print("Sum to withdraw: ");
-                    BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
-                    if (sum.compareTo(BigDecimal.ZERO) != 0) {
+        TerminalImpl terminal = null;
+        while (terminal == null) {
+            System.out.print("Set the pin code: ");
+            try {
+                terminal = new TerminalImpl(inputScanner.nextLine(), new BigDecimal(10000));
+            } catch (InvalidPinCodeException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        boolean runTerminal = true;
+        while (runTerminal) {
+            System.out.print("Select an action (1 = display balance; 2 = withdraw funds; 3 = deposit funds; 0 = quit terminal): ");
+            try {
+                switch (Integer.parseInt(inputScanner.nextLine())) {
+                    case 0 -> runTerminal = false;
+                    case 1 -> {
                         System.out.print("Enter pin code: ");
-                        terminal.withdraw(inputScanner.nextLine(), sum);
-                        System.out.println("Transaction successfully completed!");
+                        System.out.printf("> Current balance: %f%n", terminal.getBalance(inputScanner.nextLine()));
                     }
-                }
-                case 3 -> {
-                    System.out.print("Sum to deposit: ");
-                    BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
-                    if (sum.compareTo(BigDecimal.ZERO) != 0) {
-                        System.out.print("Enter pin code: ");
-                        terminal.deposit(inputScanner.nextLine(), sum);
-                        System.out.println("Transaction successfully completed!");
+                    case 2 -> {
+                        System.out.print("Sum to withdraw: ");
+                        BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
+                        if (sum.compareTo(BigDecimal.ZERO) != 0) {
+                            System.out.print("Enter pin code: ");
+                            terminal.withdraw(inputScanner.nextLine(), sum);
+                            System.out.println("> Transaction successfully completed!");
+                        }
                     }
+                    case 3 -> {
+                        System.out.print("Sum to deposit: ");
+                        BigDecimal sum = BigDecimal.valueOf(Double.parseDouble(inputScanner.nextLine()));
+                        if (sum.compareTo(BigDecimal.ZERO) != 0) {
+                            System.out.print("Enter pin code: ");
+                            terminal.deposit(inputScanner.nextLine(), sum);
+                            System.out.println("> Transaction successfully completed!");
+                        }
+                    }
+                    default -> System.out.println("Invalid action code");
                 }
-                default -> System.out.println("Invalid action code");
+            } catch (TerminalRelatedException e) {
+                System.out.println(e.getMessage());
             }
         }
 

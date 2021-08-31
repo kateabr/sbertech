@@ -12,7 +12,7 @@ public class TerminalServer {
 
     public TerminalServer(BigDecimal sum) {
         Objects.requireNonNull(sum);
-        currentSum = new BigDecimal(String.valueOf(sum));
+        currentSum = new BigDecimal(String.valueOf(sum.longValueExact()));
     }
 
     public BigDecimal getCurrentSum() {
@@ -20,8 +20,8 @@ public class TerminalServer {
     }
 
     private void verifySum(BigDecimal sum) {
-        if (sum.doubleValue() % 100 != 0) throw new SumNotDivisibleBy100Exception(sum.toString());
-        if (sum.doubleValue() < 0) throw new NegativeSumException(sum.toString());
+        if (sum.doubleValue() % 100 != 0) throw new SumNotDivisibleBy100Exception(String.valueOf(sum.longValueExact()));
+        if (sum.doubleValue() < 0) throw new NegativeSumException(String.valueOf(sum.longValueExact()));
     }
 
     public void deposit(BigDecimal sum) {
@@ -31,7 +31,7 @@ public class TerminalServer {
 
     public void withdraw(BigDecimal sum) {
         verifySum(sum);
-        if (sum.compareTo(currentSum) > 0) throw new InsufficientFundsException(sum.toString());
+        if (sum.compareTo(currentSum) > 0) throw new InsufficientFundsException(String.valueOf(sum.longValueExact()));
         currentSum = currentSum.subtract(sum);
     }
 }

@@ -40,7 +40,7 @@ public class TerminalBlock {
 
     public String blockedUntil() {
         if (!blocked) throw new UnsupportedOperationException("Terminal is not blocked");
-        LocalTime blocked = blockedUntil.atZone(ZoneOffset.UTC).toLocalTime();
+        LocalTime blocked = blockedUntil.atZone(ZoneId.systemDefault()).toLocalTime();
         return DATE_TIME_FORMATTER.format(blocked);
     }
 
