@@ -7,7 +7,7 @@ import sbertech.hw4.Exceptions.TerminalRelatedException;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class TerminalImpl implements TerminalInterface {
+public class TerminalImpl implements Terminal {
     private PinCodeValidator validator;
     private final TerminalServer server;
 
@@ -36,7 +36,7 @@ public class TerminalImpl implements TerminalInterface {
 
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
-        TerminalImpl terminal = null;
+        Terminal terminal = null;
         while (terminal == null) {
             System.out.print("Set the pin code: ");
             try {
