@@ -14,6 +14,8 @@ public class MultithreadedFactorial {
 
     public static void main(String[] args) throws IOException {
         Files.lines(Paths.get("factorials.txt"))
-                .forEach(x -> System.out.printf("%s: %s\n", x, factorial(Integer.parseInt(x)).toString()));
+                .parallel()
+                .forEach(x -> System.out.printf("%s: %s (%s)\n", x, factorial(Integer.parseInt(x)).toString(),
+                        Thread.currentThread().getName()));
     }
 }
