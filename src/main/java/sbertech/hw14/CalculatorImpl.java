@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class CalculatorImpl implements Calculator {
     @Override
-    @sbertech.hw8.Cache(saveOnDisk = true)
+    @Cache(saveOnDisk = false)
     public long fibonacciNumbers(long number) {
         if (number <= 2) return 1;
         return fibonacciNumbers(number - 1) + fibonacciNumbers(number - 2);
